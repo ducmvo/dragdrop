@@ -1,5 +1,6 @@
 import { autobind } from './decorators';
 import {validate, IValidate} from './validate';
+import {ProjectList, ProjectStatus} from './ProjectList';
 
 class ProjectInput {
 	templateElement: HTMLTemplateElement;
@@ -102,3 +103,5 @@ class ProjectInput {
 }
 
 new ProjectInput();
+new ProjectList(ProjectStatus.ACTIVE);
+new ProjectList(ProjectStatus.FINISHED);

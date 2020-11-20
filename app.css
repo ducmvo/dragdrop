@@ -9,3 +9,29 @@
 #user-input:hover {
   box-shadow: 5px 5px 10px rgb(193, 193, 193);
 } 
+
+
+.projects {
+  margin: 1rem;
+  border: 1px solid #aeaeae !important;
+  border-radius: 10px !important;
+  box-shadow: 5px 5px 15px rgb(206, 206, 206);
+}
+
+.projects:hover {
+  box-shadow: 5px 5px 10px rgb(193, 193, 193);
+} 
+
+.projects:hover header {
+  background-color: #fffbee
+}
+
+
+#active-projects h3 {
+  color: rgb(244, 85, 0);
+}
+
+#finished-projects h3 {
+  color: rgb(1, 126, 78);
+}
+
