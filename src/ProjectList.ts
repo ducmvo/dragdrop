@@ -1,37 +1,43 @@
-export enum ProjectStatus {
-	ACTIVE = 'active',
-	FINISHED = 'finished'
-}
+import { Project } from './Project';
+import { projectState } from './ProjectState';
+import { ProjectStatus } from './Project';
+import { Component } from './Component';
 
-export class ProjectList {
-	templateElement: HTMLTemplateElement;
-	hostElement: HTMLDivElement;
-	element: HTMLElement;
+export class ProjectList extends Component<HTMLDivElement, HTMLElement> {
+	assignedProjects: Project[] = [];
 
 	constructor(private type: ProjectStatus) {
-		this.templateElement = document.getElementById(
-			'project-list'
-		)! as HTMLTemplateElement;
-		this.hostElement = document.getElementById('app') as HTMLDivElement;
+		super('project-list', 'app', false, `${type}-projects`);
 
-		const importedNode = document.importNode(
-			this.templateElement.content,
-			true
-		);
-		this.element = importedNode.firstElementChild as HTMLElement;
+		this.configure();
+		this.renderContent();
+	}
 
-		this.element.id = `${this.type}-projects`;
-        this.attach();
-        this.renderContent();
-    }
-    
-    private renderContent() {
-        const listId = `${this.type}-projects-list`;
-        this.element.querySelector('ul')!.id = listId;
-        this.element.querySelector('h3')!.textContent = this.type.charAt(0).toUpperCase() + this.type.slice(1) + ' Projects'
-    }
+	renderContent() {
+		const listId = `${this.type}-projects-list`;
+		this.element.querySelector('ul')!.id = listId;
+		this.element.querySelector('h3')!.textContent =
+			this.type.charAt(0).toUpperCase() + this.type.slice(1) + ' Projects';
+	}
 
-	private attach() {
-		this.hostElement.insertAdjacentElement('beforeend', this.element);
+	configure() {
+		projectState.addListener((projects: Project[]) => {
+			this.assignedProjects = projects.filter(
+				(project) => project.status === this.type
+			);
+			this.renderProjects();
+		});
+	}
+
+	private renderProjects() {
+		const listEl = document.getElementById(
+			`${this.type}-projects-list`
+		) as HTMLUListElement;
+		listEl.innerHTML = '';
+		this.assignedProjects.map((project) => {
+			const listItem = document.createElement('li');
+			listItem.textContent = project.title;
+			listEl.appendChild(listItem);
+		});
 	}
 }
