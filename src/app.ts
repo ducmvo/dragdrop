@@ -1,4 +1,5 @@
 import { autobind } from './decorators';
+import {validate, IValidate} from './validate';
 
 class ProjectInput {
 	templateElement: HTMLTemplateElement;
@@ -34,15 +35,37 @@ class ProjectInput {
 		this.attach();
 	}
 
+	
+
 	private gatherUserInput(): [string, string, number] | void {
 		const enteredTitle = this.titleInputElement.value;
 		const enteredDescription = this.descriptionInputElement.value;
 		const enteredPeople = this.peopleInputElement.value;
 
+		const titleValidate: IValidate = {
+			value: enteredTitle,
+			required: true
+		}
+		const descriptionValidate: IValidate = {
+			value: enteredDescription,
+			required: true,
+			minLength: 5
+		}
+		const peopleValidate: IValidate = {
+			value: +enteredPeople,
+			required: true,
+			min: 1,
+			max:5
+		}
+		
+
 		if (
-			enteredTitle.trim().length === 0 ||
-			enteredDescription.trim().length === 0 ||
-			enteredPeople.trim().length === 0
+			// enteredTitle.trim().length === 0 ||
+			// enteredDescription.trim().length === 0 ||
+			// enteredPeople.trim().length === 0
+			!validate(titleValidate) &&
+			!validate(descriptionValidate) &&
+			!validate(peopleValidate)
 		) {
 			alert('Invalid input, please try again')
 			return;
