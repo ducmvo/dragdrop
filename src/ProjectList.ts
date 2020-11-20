@@ -1,6 +1,7 @@
 import { Project } from './Project';
 import { projectState } from './ProjectState';
 import { ProjectStatus } from './Project';
+import {ProjectItem} from './ProjectItem';
 import { Component } from './Component';
 
 export class ProjectList extends Component<HTMLDivElement, HTMLElement> {
@@ -34,10 +35,15 @@ export class ProjectList extends Component<HTMLDivElement, HTMLElement> {
 			`${this.type}-projects-list`
 		) as HTMLUListElement;
 		listEl.innerHTML = '';
-		this.assignedProjects.map((project) => {
-			const listItem = document.createElement('li');
-			listItem.textContent = project.title;
-			listEl.appendChild(listItem);
-		});
+		for (const project of this.assignedProjects) {
+			console.log(project)
+			new ProjectItem(this.element.querySelector('ul')!.id, project)
+		}
+		// this.assignedProjects.map((project) => {
+		// 	// const listItem = document.createElement('li');
+		// 	// listItem.textContent = project.title;
+		// 	// listEl.appendChild(listItem);
+			
+		// });
 	}
 }
