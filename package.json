@@ -1,18 +1,21 @@
 {
   "name": "dragdrop",
   "version": "1.0.0",
-  "description": "Drag n Drop Project with typescript",
+  "description": "Drag and Drop Project",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "lite-server"
+    "start:dev": "webpack-dev-server",
+    "build": "webpack --config webpack.config.prod.js"
   },
-  "keywords": [
-    "typescript",
-    "course"
-  ],
   "author": "Duc",
   "license": "ISC",
   "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "ts-loader": "^8.0.11",
+    "typescript": "^4.0.5",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.1"
   }
 }
